@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Greeting from '../components/Greeting';
+import HeroSection from '../components/HeroSection.astro';
 const pageTitle = "Home Page";
 ---
+
 <BaseLayout pageTitle={pageTitle}>
+  <HeroSection />
   <h2>Welcome to my Astro Site</h2>
-  <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
 </BaseLayout>
