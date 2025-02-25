@@ -1,12 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [
-    ".astro/types.d.ts",
-    "**/*"
-  ],
-  "exclude": [
-    "dist"
-  ],
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -14,6 +9,11 @@
       "@icons/*": ["./src/components/icons/*"]
     },
     "jsx": "react-jsx",
-    "types": ["react", "react-dom"]
+    "types": ["react", "react-dom"],
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      },
+    ]
   }
 }

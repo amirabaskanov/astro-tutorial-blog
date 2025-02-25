@@ -1,24 +1,24 @@
 ---
-import { SOCIAL_MEDIA_DATA } from '@/components/SocialMediaData'
+import { SOCIAL_MEDIA_DATA } from "@/components/SocialMediaData";
 
 interface Props {
-  class?: string
+  class?: string;
 }
 
-const { class: className } = Astro.props
+const { class: className } = Astro.props;
 ---
 
 <!-- keyboard source: https://codepen.io/HaydnComley/pen/yLdpLbJ -->
-<div class:list={['flex items-start text-center max-xs:flex-col', className]}>
-  <div class='board'>
+<div class:list={["flex items-start text-center max-xs:flex-col", className]}>
+  <div class="board">
     {
       SOCIAL_MEDIA_DATA.map(({ name, href, icon: Icon }) => (
-        <div class='key-position'>
+        <div class="key-position">
           <a
             aria-label={name}
-            class='key'
+            class="key"
             data-key={name}
-            target='_blank'
+            target="_blank"
             {...{ href }}
           >
             <Icon />
@@ -27,24 +27,27 @@ const { class: className } = Astro.props
       ))
     }
   </div>
-  <div class='key-position flex items-center justify-center'>
+  <div class="key-position flex items-center justify-center">
     <a
-      id='cta-hero-btn'
-      href='#bento'
-      data-block='center'
-      class='key call-to-action peer'
+      id="cta-hero-btn"
+      href="#bento"
+      data-block="center"
+      class="key call-to-action peer"
     >
-      <p class='call-to-action-content text-white'>Explore more</p>
+      <p class="call-to-action-content text-white">Explore more</p>
     </a>
   </div>
 </div>
 
 <style>
+  @import 'tailwindcss/preflight';
+
   :root {
-    --background-2: #09090b;  /* zinc-950 */
-    --background-3: #020617;  /* slate-950 */
+    --background-2: #09090b; /* zinc-950 */
+    --background-3: #232b34; /* slate-950 */
     --contrast: #fff;
     --size: 5rem; /* keycap size */
+
   }
 
   svg {
@@ -77,13 +80,14 @@ const { class: className } = Astro.props
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05rem;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-      'Liberation Mono', 'Courier New', monospace;
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
   }
 
   .call-to-action-content::after {
     position: absolute;
-    content: '';
+    content: "";
     width: 0;
     left: 0;
     top: 50%;
@@ -119,6 +123,7 @@ const { class: className } = Astro.props
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
   }
 
   .key:hover {
@@ -155,7 +160,7 @@ const { class: className } = Astro.props
   [data-tooltip]:before,
   [data-tooltip]:after {
     visibility: hidden;
-    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0;
     pointer-events: none;
@@ -193,7 +198,7 @@ const { class: className } = Astro.props
     border-top: 5px solid hsl(0, 0%, 20%);
     border-right: 5px solid transparent;
     border-left: 5px solid transparent;
-    content: ' ';
+    content: " ";
     font-size: 0;
     line-height: 0;
   }
@@ -202,7 +207,7 @@ const { class: className } = Astro.props
   [data-tooltip]:hover:before,
   [data-tooltip]:hover:after {
     visibility: visible;
-    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
     opacity: 1;
   }
