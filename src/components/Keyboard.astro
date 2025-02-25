@@ -1,5 +1,5 @@
 ---
-import { SOCIAL_MEDIA_DATA } from '@/components/socialMediaData'
+import { SOCIAL_MEDIA_DATA } from '@/components/SocialMediaData'
 
 interface Props {
   class?: string
@@ -41,8 +41,8 @@ const { class: className } = Astro.props
 
 <style>
   :root {
-    --background-2: theme(colors.zinc.950);
-    --background-3: theme(colors.shark.950);
+    --background-2: #09090b;  /* zinc-950 */
+    --background-3: #020617;  /* slate-950 */
     --contrast: #fff;
     --size: 5rem; /* keycap size */
   }
@@ -106,15 +106,15 @@ const { class: className } = Astro.props
     width: var(--size);
     height: var(--size);
     font-size: calc(var(--size) / 2);
-    border: 0.1rem solid var(--background-3);
+    border: 0.1rem solid var(--background-3, #020617);
     border-radius: calc(var(--size) * 0.2);
     background: var(--background-2);
     color: var;
     box-shadow:
-      0.15rem 0.15rem 0 0 var(--background-3),
-      0.3rem 0.3rem 0 0 var(--background-3),
-      0.45rem 0.45rem 0 0 var(--background-3),
-      0.6rem 0.6rem 0 0 var(--background-3);
+      0.15rem 0.15rem 0 0 var(--background-3, #020617),
+      0.3rem 0.3rem 0 0 var(--background-3, #020617),
+      0.45rem 0.45rem 0 0 var(--background-3, #020617),
+      0.6rem 0.6rem 0 0 var(--background-3, #020617);
     transition: 0.2s ease;
     display: flex;
     align-items: center;
@@ -125,10 +125,10 @@ const { class: className } = Astro.props
     cursor: pointer;
     transform: translateX(0.3rem) translateY(0.3rem);
     box-shadow:
-      0.15rem 0.15rem 0 0 var(--background-3),
-      0.3rem 0.3rem 0 0 var(--background-3),
-      0.45rem 0.45rem 0 0 var(--background-3),
-      0.5rem 0.5rem 0 0 var(--background-3);
+      0.15rem 0.15rem 0 0 var(--background-3, #020617),
+      0.3rem 0.3rem 0 0 var(--background-3, #020617),
+      0.45rem 0.45rem 0 0 var(--background-3, #020617),
+      0.5rem 0.5rem 0 0 var(--background-3, #020617);
   }
 
   .key:active,
@@ -136,10 +136,10 @@ const { class: className } = Astro.props
     cursor: grabbing;
     transform: translateX(0.8rem) translateY(0.8rem);
     box-shadow:
-      0.1rem 0.1rem 0 0 var(--background-3),
-      0.1rem 0.1rem 0 0 var(--background-3),
-      0.2rem 0.2rem 0 0 var(--background-3),
-      0.2rem 0.2rem 0 0 var(--background-3);
+      0.1rem 0.1rem 0 0 var(--background-3, #020617),
+      0.1rem 0.1rem 0 0 var(--background-3, #020617),
+      0.2rem 0.2rem 0 0 var(--background-3, #020617),
+      0.2rem 0.2rem 0 0 var(--background-3, #020617);
     filter: blur(0.02rem);
   }
 
