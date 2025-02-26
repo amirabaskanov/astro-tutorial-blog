@@ -2,18 +2,7 @@
 @import "tailwindcss-animated";
 
 @theme {
-    /* --animate-enter: fade-in-bottom 0.45s;
 
-    @keyframes fade-in-bottom {
-        0% {
-        opacity: 0.025;
-        transform: translateY(100%);
-        }
-        100% {
-        opacity: 1;
-        transform: translateY(0);
-        }
-    } */
 
     --color-red-50: oklch(0.971 0.013 17.38);
     --color-red-100: oklch(0.936 0.032 17.717);
