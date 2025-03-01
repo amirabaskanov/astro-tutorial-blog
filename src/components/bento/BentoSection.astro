@@ -1,4 +1,22 @@
+---
+
+import { GithubOutline } from "../icons/GithubOutline"
+import { LinkedIn } from "../icons/LinkedIn"
+import { Mail } from "../icons/Mail"
+
+import BentoCard from "./BentoCard"
+
+const socialMedias = [
+  { icon: LinkedIn, href: 'https://linkedin.com/in/abaskanov' },
+  { icon: GithubOutline, href: 'https://github.com/amirabaskanov' },
+  { icon: Mail, href: 'mailto:me@amirabaskanov@gmail.com' }
+]
+---
+
+
 <!-- tutorial code from https://github.com/Lexington-Themes/lexington-tutorials/blob/main/src/pages/bento-grid/index.astro -->
+
+
 
 <section class="bg-slate-950/25 w-2/3 relative overflow-hidden">
       <div
@@ -12,7 +30,6 @@
               Capture moments in stunning detail with our advanced camera
               technology. Perfect for professionals and enthusiasts alike.
             </p>
-            
           </div>
 
           <!-- Tall box spanning 3 rows -->
@@ -44,13 +61,19 @@
           </div>
 
           <!-- Tall box spanning 2 rows -->
-          <div
-            class="bg-gray-100 ring-1 ring-inset ring-gray-200 shadow p-6 rounded-xl md:row-span-2 lg:col-span-2">
-            <p class="text-orange-600">Gaming</p>
-            <p class="mt-4 text-sm">
-              Immerse yourself in new worlds with cutting-edge graphics and
-              gameplay.
-            </p>
+          <div class="grid grid-cols-3 gap-4 col-span-2 md:row-span-1 lg:col-span-2">
+            {socialMedias.map(({ icon: Icon, href }) => (
+              <BentoCard className="aspect-square group relative overflow-hidden rounded-3xl bg-slate-800 ring-1 ring-slate-600">
+                <a
+                  href={href}
+                  aria-label="Social media"
+                  target="_blank"
+                  class="flex size-full items-center justify-center rounded-3xl transition-colors duration-300 group-hover:text-emerald-400"
+                >
+                  <Icon className="size-10 transition-colors duration-300" />
+                </a>
+              </BentoCard>
+            ))}
           </div>
 
           <!-- Regular boxes -->
