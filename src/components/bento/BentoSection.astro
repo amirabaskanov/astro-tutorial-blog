@@ -5,6 +5,7 @@ import { LinkedIn } from "../icons/LinkedIn"
 import { Mail } from "../icons/Mail"
 
 import BentoCard from "./BentoCard"
+import BentoItemMapLocation from "./BentoItemMapLocation"
 
 const socialMedias = [
   { icon: LinkedIn, href: 'https://linkedin.com/in/abaskanov' },
@@ -25,12 +26,8 @@ const socialMedias = [
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 lg:grid-cols-6">
           <!-- Large box spanning 2x2 -->
           <div
-            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-6 rounded-3xl md:col-span-2 md:row-span-2">
-            <p class="text-white">Photography</p>
-            <p class="mt-4 text-sm text-slate-400">
-              Capture moments in stunning detail with our advanced camera
-              technology. Perfect for professionals and enthusiasts alike.
-            </p>
+            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-0 rounded-3xl md:col-span-2 md:row-span-2 m-0">
+            <iframe class="w-full h-full m-0 p-0 rounded-3xl" src="https://api.maptiler.com/maps/e4158375-98c0-4345-a238-74bc07955527/?key=yEyrvOzGbcGcclRXkYL9#10.9/42.36690/-71.13661"></iframe>
           </div>
 
           <!-- Tall box spanning 3 rows -->
@@ -76,6 +73,8 @@ const socialMedias = [
               </BentoCard>
             ))}
           </div>
+
+
 
           <!-- Regular boxes -->
           <div
