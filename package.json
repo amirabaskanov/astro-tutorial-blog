@@ -12,6 +12,7 @@
     "@astrojs/preact": "^4.0.3",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/ts-plugin": "^1.10.4",
+    "@maptiler/leaflet-maptilersdk": "^4.0.2",
     "@tailwindcss/vite": "^4.0.8",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
