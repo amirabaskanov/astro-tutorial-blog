@@ -14,12 +14,12 @@ export const SOCIAL_MEDIA_DATA = [
     icon: LinkedIn,
     href: "https://linkedin.com/in/abaskanov",
   },
-  {
-    //Change to Quick View and Download
-    name: "Resume",
-    icon: Scroll,
-    href: "https://read.cv/",
-  },
+  // {
+  //   //Change to Quick View and Download
+  //   name: "Resume",
+  //   icon: Scroll,
+  //   href: "https://read.cv/",
+  // },
   {
     name: "Email",
     icon: Mail,

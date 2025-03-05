@@ -16,8 +16,9 @@ const { pageTitle } = Astro.props;
   <body class='bg-[url(../assets/images/og_background.png)] bg-no-repeat flex min-h-screen flex-col items-center bg-zinc-950 text-white'>
     <!-- <Header /> -->
     <!-- <h1>{pageTitle}</h1> -->
+
     <slot />
-    <Footer />
+    <Footer/>
     <script>
       import "../scripts/menu.js";
     </script>

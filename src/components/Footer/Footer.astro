@@ -21,16 +21,16 @@ type FooterContent = {
 const socialMediaData = [
   // CHANGE
   ...SOCIAL_MEDIA_DATA,
-  { icon: Instagram, href: 'https://instagram.com/amirabaskanov', name: 'instagram' }
+//   { icon: Instagram, href: 'https://instagram.com/amirabaskanov', name: 'instagram' }
 ]
 
 const FOOTER_CONTENTS: FooterContent[] = [
-  {
-    title: 'Me',
-    links: [
-      { text: 'Blog', href: '/blog' },
-    ]
-  },
+//   {
+//     title: 'Me',
+//     links: [
+//       { text: 'Blog', href: '/blog' },
+//     ]
+//   },
   {
     title: 'This site',
     links: [
@@ -98,10 +98,13 @@ const FOOTER_CONTENTS: FooterContent[] = [
             Amir
           </p>
           <p class='flex text-[13px] text-zinc-500'>
-            Software Engineer Intern @ <Link href={"https://growthhungry.life"} class='flex items-center gap-1 font-normal hover:text-zinc-200'>GrowthHungry <ArrowOutward className='size-3'/></Link>
+            Software Engineer Intern @ <Link href={"https://growthhungry.life"} target="_blank" class='flex items-center gap-1 font-normal hover:text-zinc-200'>GrowthHungry <ArrowOutward className='size-3'/></Link>
           </p>
           <p class='flex text-[13px] text-zinc-500'>
-            Ex-Software Engineer Intern @ <Link href={"https://www.kodif.ai/"} class='flex items-center gap-1 font-normal hover:text-zinc-200'>Kodif <ArrowOutward className='size-3'/></Link>
+            Ex-Software Engineer Intern @ <Link href={"https://www.kodif.ai/"} target="_blank" class='flex items-center gap-1 font-normal hover:text-zinc-200'>Kodif <ArrowOutward className='size-3'/></Link>
+          </p>
+          <p class="text-[13px] text-zinc-500">
+            [This website is a work in progress]
           </p>
         </div>
         <div class='space-y-6'>
