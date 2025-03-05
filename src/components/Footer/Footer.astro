@@ -6,6 +6,7 @@ import Link from '@/components/Link'
 import { SOCIAL_MEDIA_DATA } from '../SocialMediaData'
 // import LastUpdatedTime from './LastUpdatedTime.astro'
 import { Instagram } from '@icons/Instagram'
+import { icon } from 'leaflet'
 
 type FooterContent = {
   title: string
@@ -39,12 +40,12 @@ const FOOTER_CONTENTS: FooterContent[] = [
         href: 'https://github.com/amirabaskanov',
         inNewTab: true
       },
-      {
-        text: 'Analytics',
-        // Change
-        href: 'https://us.umami.is/websites/f1268456-1a63-4072-b4e8-93b4dd501de9',
-        inNewTab: true
-      },
+    //   {
+    //     text: 'Analytics',
+    //     // Change
+    //     href: 'https://us.umami.is/websites/f1268456-1a63-4072-b4e8-93b4dd501de9',
+    //     inNewTab: true
+    //   },
     ]
   },
   {
@@ -96,8 +97,11 @@ const FOOTER_CONTENTS: FooterContent[] = [
             <!-- <span class='mx-[2px]'>•</span> -->
             Amir
           </p>
-          <p class='text-[13px] text-zinc-500'>
-            A dedicated problem-solver
+          <p class='flex text-[13px] text-zinc-500'>
+            Software Engineer Intern @ <Link href={"https://growthhungry.life"} class='flex items-center gap-1 font-normal hover:text-zinc-200'>GrowthHungry <ArrowOutward className='size-3'/></Link>
+          </p>
+          <p class='flex text-[13px] text-zinc-500'>
+            Ex-Software Engineer Intern @ <Link href={"https://www.kodif.ai/"} class='flex items-center gap-1 font-normal hover:text-zinc-200'>Kodif <ArrowOutward className='size-3'/></Link>
           </p>
         </div>
         <div class='space-y-6'>
