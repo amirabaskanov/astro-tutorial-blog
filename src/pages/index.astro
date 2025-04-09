@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroSection from "../components/HeroSection.astro";
-import BentoSection from "../components/bento/BentoSection.astro";
+import BentoSection from "@/components/bento/BentoSection.astro";
 import ProjectSection from "@/components/ProjectSection.astro";
 import Blog from "./blog.astro";
 const pageTitle = "Home Page";
@@ -14,8 +14,8 @@ const pageTitle = "Home Page";
 <!-- <BentoSection /> -->
 <BaseLayout pageTitle={pageTitle}>
   <HeroSection />
+  <BentoSection />
   <ProjectSection />
-  <!-- <h2>Welcome to my Astro Site</h2> -->
 </BaseLayout>
 
 

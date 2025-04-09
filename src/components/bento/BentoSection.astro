@@ -1,123 +1,54 @@
 ---
-
-import { GithubOutline } from "../icons/GithubOutline"
-import { LinkedIn } from "../icons/LinkedIn"
-import { Mail } from "../icons/Mail"
-
-import BentoCard from "./BentoCard"
-import BentoItemMapLocation from "./BentoItemMapLocation"
-
-const socialMedias = [
-  { icon: LinkedIn, href: 'https://linkedin.com/in/abaskanov' },
-  { icon: GithubOutline, href: 'https://github.com/amirabaskanov' },
-  { icon: Mail, href: 'mailto:me@amirabaskanov@gmail.com' }
-]
-
+import BentoCard from './BentoCard.astro';
 ---
 
+<div id=#bento class="w-2/3 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 max-w-[1200px]">
+  <BentoCard title="Location" icon="📍">
+    Location placeholder
+  </BentoCard>
+  
+  <BentoCard title="Featured Work" icon="🎨" colSpan={true}>
+    Featured work placeholder
+  </BentoCard>
+  
+  <BentoCard title="Spotify" icon="🎵">
+    Now playing placeholder
+  </BentoCard>
+  
+  <BentoCard title="Social Media" icon="🌐">
+    Social links placeholder
+  </BentoCard>
+  
+  <BentoCard title="Projects" icon="💼" colSpan={true}>
+    Projects placeholder
+  </BentoCard>
+  
+  <BentoCard title="Monkeytype" icon="⌨️">
+    Typing stats placeholder
+  </BentoCard>
+  
+  <BentoCard title="Github Activity" icon="📊" colSpan={true}>
+    Contribution graph placeholder
+  </BentoCard>
+  
+  <BentoCard title="Tech Stack" icon="💻" colSpan={true}>
+    Technologies placeholder
+  </BentoCard>
+</div>
 
-<!-- tutorial code from https://github.com/Lexington-Themes/lexington-tutorials/blob/main/src/pages/bento-grid/index.astro -->
-
-
-
-<section id="bento" class="bg-slate-950/25 w-2/3 relative overflow-hidden">
-      <div
-        class="max-w-7xl mx-auto text-balance text-gray-500">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 lg:grid-cols-6">
-          <!-- Large box spanning 2x2 -->
-          <div
-            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-0 rounded-3xl md:col-span-2 md:row-span-2 m-0">
-            <iframe class="w-full h-full m-0 p-0 rounded-3xl" src="https://api.maptiler.com/maps/e4158375-98c0-4345-a238-74bc07955527/?key=yEyrvOzGbcGcclRXkYL9#10.9/42.36690/-71.13661"></iframe>
-          </div>
-
-          <!-- Tall box spanning 3 rows -->
-          <div
-            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-6 rounded-3xl md:row-span-2">
-            <p class="text-white">Coding</p>
-            <p class="mt-4 text-sm text-slate-400">
-              Build the future with powerful development tools. From web to
-              mobile, create anything you can imagine.
-            </p>
-          </div>
-
-          <!-- Regular box -->
-          <div
-            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-6 rounded-3xl md:row-span-3 lg:row-span-2">
-            <p class="text-white">Music</p>
-            <p class="mt-4 text-sm text-slate-400">
-              Experience the power of sound with high-fidelity audio.
-            </p>
-          </div>
-
-          <!-- Wide box spanning 2 columns -->
-          <div
-            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-6 rounded-3xl md:col-span-2">
-            <p class="text-white">Video Production</p>
-            <p class="mt-4 text-sm text-slate-400">
-              Create cinematic masterpieces with professional-grade tools.
-            </p>
-          </div>
-
-          <!-- Tall box spanning 2 rows -->
-          <div class="grid grid-cols-3 gap-4 col-span-2 md:row-span-1 lg:col-span-2">
-            {socialMedias.map(({ icon: Icon, href }) => (
-              <BentoCard className="aspect-square group relative overflow-hidden rounded-3xl bg-slate-800 ring-1 ring-slate-600">
-                <a
-                  href={href}
-                  aria-label="Social media"
-                  target="_blank"
-                  class="flex size-full items-center justify-center rounded-3xl transition-colors duration-300 group-hover:text-emerald-400"
-                >
-                  <Icon className="size-10 transition-colors duration-300" />
-                </a>
-              </BentoCard>
-            ))}
-          </div>
-
-
-
-          <!-- Regular boxes -->
-          <div
-            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-6 rounded-3xl md:col-span-2">
-            <p class="text-white">AI</p>
-            <p class="mt-4 text-sm text-slate-400">
-              Harness the power of artificial intelligence.
-            </p>
-          </div>
-          <div
-            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-6 rounded-3xl lg:col-span-2">
-            <p class="text-white">VR</p>
-            <p class="mt-4 text-sm text-slate-400">
-              Step into virtual reality and explore new dimensions.
-            </p>
-          </div>
-
-          <!-- Wide box spanning 3 columns -->
-          <div
-            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-6 rounded-3xl md:col-span-3">
-            <p class="text-white">IoT Ecosystem</p>
-            <p class="mt-4 text-sm text-slate-400">
-              Connect your world with smart devices. Create a seamless network
-              of intelligent gadgets.
-            </p>
-          </div>
-
-          <!-- Regular boxes -->
-          <div
-            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-6 rounded-3xl lg:col-span-2">
-            <p class="text-white">Cloud</p>
-            <p class="mt-4 text-sm text-slate-400">
-              Scale your projects with powerful cloud solutions.
-            </p>
-          </div>
-          <div
-            class="bg-slate-800 ring-1 ring-inset ring-slate-600 shadow p-6 rounded-3xl col-span-full lg:col-span-1">
-            <p class="text-white">Security</p>
-            <p class="mt-4 text-sm text-slate-400">
-              Protect your digital assets with advanced cybersecurity.
-            </p>
-          </div>
-        </div>
-      </div>     
-    </div>
-</section>
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const cards = document.querySelectorAll(".group");
+    
+    cards.forEach((card) => {
+      (card as HTMLElement).addEventListener("mousemove", (e: MouseEvent) => {
+        const rect = (card as HTMLElement).getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        (card as HTMLElement).style.setProperty("--mouse-x", `${x}px`);
+        (card as HTMLElement).style.setProperty("--mouse-y", `${y}px`);
+      });
+    });
+  });
+</script>

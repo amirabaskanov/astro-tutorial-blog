@@ -1,0 +1,27 @@
+---
+interface Props {
+  title: string;
+  icon: string;
+  colSpan?: boolean;
+}
+
+const { title, icon, colSpan = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    "group relative bg-slate-800/50 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-200 min-h-[150px] flex flex-col overflow-hidden",
+    { "sm:col-span-2 lg:col-span-2": colSpan }
+  ]}
+>
+  <div
+    class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300 [background:radial-gradient(600px_circle_at_var(--mouse-x,0px)_var(--mouse-y,0px),rgba(255,255,255,0.06),transparent_40%)]"
+  >
+  </div>
+  <h3 class="text-xl font-semibold mb-4 text-white relative z-10">
+    {icon} {title}
+  </h3>
+  <p class="text-slate-400 relative z-10">
+    <slot />
+  </p>
+</div> 
