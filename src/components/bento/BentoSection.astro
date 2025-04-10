@@ -1,8 +1,9 @@
 ---
 import BentoCard from './BentoCard.astro';
+import GithubActivity from './GithubActivity.astro';
 ---
 
-<div id=#bento class="w-2/3 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 max-w-[1200px]">
+<div id="bento" class="w-2/3 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 max-w-[1200px]">
   <BentoCard title="Location" icon="📍">
     Location placeholder
   </BentoCard>
@@ -28,7 +29,12 @@ import BentoCard from './BentoCard.astro';
   </BentoCard>
   
   <BentoCard title="Github Activity" icon="📊" colSpan={true}>
-    Contribution graph placeholder
+    <div class="flex items-center justify-between">
+      <GithubActivity username="amirabaskanov" />
+      <div class="text-white text-[14px] contribution-info absolute top-8.5 right-6">
+        <span>Loading contributions...</span>
+      </div>
+    </div>
   </BentoCard>
   
   <BentoCard title="Tech Stack" icon="💻" colSpan={true}>
@@ -37,18 +43,18 @@ import BentoCard from './BentoCard.astro';
 </div>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
-    const cards = document.querySelectorAll(".group");
+  const handleMouseMove = (e: MouseEvent, card: HTMLElement) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
-    cards.forEach((card) => {
-      (card as HTMLElement).addEventListener("mousemove", (e: MouseEvent) => {
-        const rect = (card as HTMLElement).getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        (card as HTMLElement).style.setProperty("--mouse-x", `${x}px`);
-        (card as HTMLElement).style.setProperty("--mouse-y", `${y}px`);
-      });
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
+  };
+
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll<HTMLElement>(".group").forEach((card) => {
+      card.addEventListener("mousemove", (e) => handleMouseMove(e, card));
     });
   });
 </script>

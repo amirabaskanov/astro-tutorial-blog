@@ -1,27 +1,25 @@
 ---
 interface Props {
-  title: string;
-  icon: string;
+  title?: string;
+  icon?: string;
   colSpan?: boolean;
 }
 
-const { title, icon, colSpan = false } = Astro.props;
+const { title, icon, colSpan } = Astro.props;
 ---
 
-<div
-  class:list={[
-    "group relative bg-slate-800/50 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-200 min-h-[150px] flex flex-col overflow-hidden",
-    { "sm:col-span-2 lg:col-span-2": colSpan }
-  ]}
->
-  <div
-    class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300 [background:radial-gradient(600px_circle_at_var(--mouse-x,0px)_var(--mouse-y,0px),rgba(255,255,255,0.06),transparent_40%)]"
-  >
-  </div>
-  <h3 class="text-xl font-semibold mb-4 text-white relative z-10">
-    {icon} {title}
-  </h3>
-  <p class="text-slate-400 relative z-10">
+<div class={`group relative rounded-[32px] border border-[#1e2028] bg-[#0d0f12] overflow-hidden ${colSpan ? 'col-span-2' : ''}`}>
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 [background:radial-gradient(600px_circle_at_var(--mouse-x)_var(--mouse-y),rgba(255,255,255,0.06),transparent_40%)]" />
+  
+  <div class="p-6">
+    {title && (
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-2 bg-[#1e2028] rounded-full py-1.5 px-3">
+          {icon && <span class="text-base">{icon}</span>}
+          <span class="text-white text-sm">{title}</span>
+        </div>
+      </div>
+    )}
     <slot />
-  </p>
+  </div>
 </div> 
