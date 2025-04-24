@@ -21,11 +21,7 @@ interface GitHubResponse {
           totalContributions: number;
           weeks: ContributionWeek[];
         };
-      };
-      repositories?: {
-        nodes?: Array<{
-          pushedAt: string;
-        }>;
+        latestRestrictedContributionDate: string;
       };
     };
   };
@@ -68,18 +64,14 @@ const query = `
             }
           }
         }
-      }
-      repositories(first: 1, orderBy: {field: PUSHED_AT, direction: DESC}, ownerAffiliations: [OWNER], isFork: false) {
-        nodes {
-          pushedAt
-        }
+        latestRestrictedContributionDate
       }
     }
   }
 `;
 
 let totalContributions = 0;
-let lastPushDate: string | null = null;
+let lastContributionDate: string | null = null;
 let contributionWeeks: ContributionWeek[] = [];
 
 try {
@@ -101,7 +93,14 @@ try {
   if (data.data?.user) {
     totalContributions = data.data.user.contributionsCollection?.contributionCalendar?.totalContributions || 0;
     contributionWeeks = data.data.user.contributionsCollection?.contributionCalendar?.weeks.slice(-26) || [];
-    lastPushDate = data.data.user.repositories?.nodes?.[0]?.pushedAt || null;
+    
+    // Find the latest contribution date from the calendar
+    const allDays = contributionWeeks.flatMap(week => week.contributionDays);
+    const latestDay = allDays
+      .filter(day => day.contributionCount > 0)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+    
+    lastContributionDate = latestDay?.date || null;
   }
 } catch (e) {
   console.error('Failed to fetch GitHub data:', e);
@@ -109,26 +108,27 @@ try {
 
 const formatDate = (dateString: string) => {
   if (!dateString) return '';
-  const date = new Date(dateString);
-  const now = new Date();
-  
-  if (date >= now) return 'Recently';
-  
+  // Create date in UTC to avoid timezone shifts
+  const date = new Date(dateString + 'T00:00:00Z');
   return new Intl.DateTimeFormat('en-US', { 
     weekday: 'long',
     month: 'long',
     day: 'numeric',
-    year: 'numeric'
+    year: 'numeric',
+    timeZone: 'UTC'
   }).format(date);
 };
 
 // Filter out any future dates
 const today = new Date();
-today.setHours(0, 0, 0, 0);
+today.setHours(23, 59, 59, 999); // Set to end of day in local time
 
 const filteredWeeks = contributionWeeks
   .map(week => ({
-    contributionDays: week.contributionDays.filter(day => new Date(day.date) <= today)
+    contributionDays: week.contributionDays.filter(day => {
+      const contributionDate = new Date(day.date + 'T00:00:00Z');
+      return contributionDate <= today;
+    })
   }))
   .filter(week => week.contributionDays.length > 0);
 
@@ -158,7 +158,7 @@ Astro.props.totalContributions = totalContributions;
   </div>
 
   <div class="text-white text-sm">
-    {lastPushDate ? `Last pushed on ${formatDate(lastPushDate)}` : 'No recent pushes'}
+    {lastContributionDate ? `Last contributed ${formatDate(lastContributionDate)}` : 'No recent contributions'}
   </div>
 </div>
 

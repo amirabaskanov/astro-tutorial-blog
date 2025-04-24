@@ -1,34 +1,37 @@
 ---
 import BentoCard from './BentoCard.astro';
 import GithubActivity from './GithubActivity.astro';
+import BentoItemTypingSpeed from './BentoItemTypingSpeed.astro';
+import { LocationIcon, FeaturedWorkIcon, SpotifyIcon, SocialIcon, ProjectsIcon, GithubIcon, TechStackIcon } from '../icons/BentoIcons';
+import { Monkeytype } from '../icons/Monkeytype';
 ---
 
-<div id="bento" class="w-2/3 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 max-w-[1200px]">
-  <BentoCard title="Location" icon="📍">
+<div id="bento" class="w-2/3 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 p-4 max-w-[1200px]">
+  <BentoCard title="Location" icon={LocationIcon} colSpan={true}>
     Location placeholder
   </BentoCard>
   
-  <BentoCard title="Featured Work" icon="🎨" colSpan={true}>
+  <BentoCard title="Featured work" icon={FeaturedWorkIcon} colSpan={true}>
     Featured work placeholder
   </BentoCard>
   
-  <BentoCard title="Spotify" icon="🎵">
+  <BentoCard title="Spotify" icon={SpotifyIcon} colSpan={true}>
     Now playing placeholder
   </BentoCard>
   
-  <BentoCard title="Social Media" icon="🌐">
+  <BentoCard title="Social media" icon={SocialIcon} colSpan={true}>
     Social links placeholder
   </BentoCard>
   
-  <BentoCard title="Projects" icon="💼" colSpan={true}>
+  <BentoCard title="Projects" icon={ProjectsIcon} colSpan={true}>
     Projects placeholder
   </BentoCard>
   
-  <BentoCard title="Monkeytype" icon="⌨️">
-    Typing stats placeholder
+  <BentoCard title="Typing speed" icon={Monkeytype} colSpan={true}>
+    <BentoItemTypingSpeed />
   </BentoCard>
   
-  <BentoCard title="Github Activity" icon="📊" colSpan={true}>
+  <BentoCard title="Github activity" icon={GithubIcon} isWide={true}>
     <div class="flex items-center justify-between">
       <GithubActivity username="amirabaskanov" />
       <div class="text-white text-[14px] contribution-info absolute top-8.5 right-6">
@@ -37,7 +40,7 @@ import GithubActivity from './GithubActivity.astro';
     </div>
   </BentoCard>
   
-  <BentoCard title="Tech Stack" icon="💻" colSpan={true}>
+  <BentoCard title="Tech stack" icon={TechStackIcon} isWide={true}>
     Technologies placeholder
   </BentoCard>
 </div>

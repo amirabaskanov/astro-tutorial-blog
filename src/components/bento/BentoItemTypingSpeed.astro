@@ -1,0 +1,10 @@
+---
+import { getMonkeytypeData } from '@/lib/monkeytype'
+import BentoItemTypingSpeedContent from './BentoItemTypingSpeedContent'
+
+const data = await getMonkeytypeData()
+
+Astro.response.headers.set('Cache-Control', 'public, max-age=86400')
+---
+
+<BentoItemTypingSpeedContent data={data} client:load />

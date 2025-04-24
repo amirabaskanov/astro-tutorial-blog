@@ -11,6 +11,7 @@
   "dependencies": {
     "@astrojs/netlify": "^6.2.2",
     "@astrojs/preact": "^4.0.3",
+    "@astrojs/react": "^4.2.5",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/ts-plugin": "^1.10.4",
     "@maptiler/leaflet-maptilersdk": "^4.0.2",
@@ -20,8 +21,8 @@
     "astro": "^5.1.10",
     "leaflet": "^1.9.4",
     "preact": "^10.25.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-leaflet": "^5.0.0",
     "svg": "^0.1.0",
     "tailwind-merge": "^3.0.2",
