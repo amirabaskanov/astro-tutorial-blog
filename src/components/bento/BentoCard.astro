@@ -7,15 +7,16 @@ interface Props {
   icon?: FC<SVGProps<SVGSVGElement>>;
   colSpan?: boolean;
   isWide?: boolean;
+  className?: string;
 }
 
-const { title, icon: Icon, colSpan, isWide } = Astro.props;
+const { title, icon: Icon, colSpan, isWide, className } = Astro.props;
 ---
 
-<div class={`group relative rounded-[32px] border border-[#2A3441] bg-[#0f1219] overflow-hidden ${isWide ? 'col-span-3' : colSpan ? 'col-span-2' : ''}`}>
+<div class={`group relative rounded-[32px] border border-[#2A3441] bg-[#0f1219] overflow-hidden ${isWide ? 'col-span-3' : colSpan ? 'col-span-2' : ''} ${className || ''}`}>
   <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 [background:radial-gradient(600px_circle_at_var(--mouse-x)_var(--mouse-y),rgba(255,255,255,0.06),transparent_40%)]" />
   
-  <div class="p-6">
+  <div class="p-6 h-full">
     {title && Icon && (
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-2 bg-[#090D13] border border-[#2A3441] rounded-full py-1.5 px-3">

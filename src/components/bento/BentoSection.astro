@@ -2,47 +2,105 @@
 import BentoCard from './BentoCard.astro';
 import GithubActivity from './GithubActivity.astro';
 import BentoItemTypingSpeed from './BentoItemTypingSpeed.astro';
-import { LocationIcon, FeaturedWorkIcon, SpotifyIcon, SocialIcon, ProjectsIcon, GithubIcon, TechStackIcon } from '../icons/BentoIcons';
+import { LocationIcon, FeaturedWorkIcon, SpotifyIcon, GithubIcon, TechStackIcon, ProjectsIcon } from '../icons/BentoIcons';
 import { Monkeytype } from '../icons/Monkeytype';
+import { LinkedIn } from '../icons/LinkedIn';
 ---
 
-<div id="bento" class="w-2/3 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 p-4 max-w-[1200px]">
-  <BentoCard title="Location" icon={LocationIcon} colSpan={true}>
-    Location placeholder
-  </BentoCard>
-  
-  <BentoCard title="Featured work" icon={FeaturedWorkIcon} colSpan={true}>
-    Featured work placeholder
-  </BentoCard>
-  
-  <BentoCard title="Spotify" icon={SpotifyIcon} colSpan={true}>
-    Now playing placeholder
-  </BentoCard>
-  
-  <BentoCard title="Social media" icon={SocialIcon} colSpan={true}>
-    Social links placeholder
-  </BentoCard>
-  
-  <BentoCard title="Projects" icon={ProjectsIcon} colSpan={true}>
-    Projects placeholder
-  </BentoCard>
-  
-  <BentoCard title="Typing speed" icon={Monkeytype} colSpan={true}>
-    <BentoItemTypingSpeed />
-  </BentoCard>
-  
-  <BentoCard title="Github activity" icon={GithubIcon} isWide={true}>
-    <div class="flex items-center justify-between">
-      <GithubActivity username="amirabaskanov" />
-      <div class="text-white text-[14px] contribution-info absolute top-8.5 right-6">
-        <span>Loading contributions...</span>
+<div id="bento" class="w-full max-w-[1120px] mx-auto px-4 pt-28">
+  <div class="grid grid-cols-14 grid-rows-2 gap-4">
+    <!-- Location Card (spans 2 rows) -->
+    <div class="col-span-4 row-span-2">
+      <BentoCard title="Location" icon={LocationIcon} className="h-[300px]">
+        Location placeholder
+      </BentoCard>
+    </div>
+
+    <!-- Featured Work Card (spans 2 rows) -->
+    <div class="col-span-5 row-span-2">
+      <BentoCard title="Featured work" icon={FeaturedWorkIcon} className="h-[300px]">
+        Featured work placeholder
+      </BentoCard>
+    </div>
+
+    <!-- Spotify Card -->
+    <div class="col-span-5">
+      <BentoCard title="Spotify" icon={SpotifyIcon} className="h-[140px]">
+        Now playing placeholder
+      </BentoCard>
+    </div>
+
+    <!-- Typing Speed Card (spans 2 rows) -->
+    <div class="col-span-5 row-span-2">
+      <BentoCard title="Typing speed" icon={Monkeytype} className="h-[250px]">
+        <BentoItemTypingSpeed />
+      </BentoCard>
+    </div>
+
+    <!-- Social Media Row -->
+    <div class="col-span-4 row-start-3 flex gap-4">
+      <div class="w-1/3">
+        <a href="https://twitter.com/amirabaskanov" target="_blank" rel="noopener noreferrer" class="block">
+          <div class="group relative rounded-[32px] border border-[#2A3441] bg-[#0f1219] overflow-hidden aspect-square">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 [background:radial-gradient(600px_circle_at_var(--mouse-x)_var(--mouse-y),rgba(255,255,255,0.06),transparent_40%)]" />
+            <div class="p-6 h-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="size-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="w-1/3">
+        <a href="https://github.com/amirabaskanov" target="_blank" rel="noopener noreferrer" class="block">
+          <div class="group relative rounded-[32px] border border-[#2A3441] bg-[#0f1219] overflow-hidden aspect-square">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 [background:radial-gradient(600px_circle_at_var(--mouse-x)_var(--mouse-y),rgba(255,255,255,0.06),transparent_40%)]" />
+            <div class="p-6 h-full flex items-center justify-center">
+              <GithubIcon className="size-8 text-white" />
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="w-1/3">
+        <a href="https://linkedin.com/in/abaskanov" target="_blank" rel="noopener noreferrer" class="block">
+          <div class="group relative rounded-[32px] border border-[#2A3441] bg-[#0f1219] overflow-hidden aspect-square">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 [background:radial-gradient(600px_circle_at_var(--mouse-x)_var(--mouse-y),rgba(255,255,255,0.06),transparent_40%)]" />
+            <div class="p-6 h-full flex items-center justify-center">
+              <LinkedIn className="size-8 text-white" />
+            </div>
+          </div>
+        </a>
       </div>
     </div>
-  </BentoCard>
-  
-  <BentoCard title="Tech stack" icon={TechStackIcon} isWide={true}>
-    Technologies placeholder
-  </BentoCard>
+
+    <!-- Discover More -->
+    <div class="col-span-5 row-start-3">
+      <BentoCard className="h-[90px]">
+        <div class="flex h-full items-center justify-between">
+          <span>Discover more projects</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </BentoCard>
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="col-span-7 row-start-4">
+      <BentoCard title="Github activity" icon={GithubIcon} className="h-[300px]">
+        <div class="flex items-center justify-between">
+          <GithubActivity username="amirabaskanov" />
+          <div class="text-white text-[14px] contribution-info absolute top-8.5 right-6">
+            <span>Loading contributions...</span>
+          </div>
+        </div>
+      </BentoCard>
+    </div>
+
+    <div class="col-span-7 row-start-4">
+      <BentoCard title="Tech stack" icon={TechStackIcon} className="h-[300px]">
+        Technologies placeholder
+      </BentoCard>
+    </div>
+  </div>
 </div>
 
 <script>

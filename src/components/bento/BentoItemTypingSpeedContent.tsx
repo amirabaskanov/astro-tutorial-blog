@@ -41,7 +41,7 @@ export default function BentoItemTypingSpeedContent({ data }: Props) {
   return (
     <div className="relative h-full">
       {/* Background Number */}
-      <div className="absolute inset-x-0 bottom-[18%] flex pl-2 items-end justify-center">
+      <div className="absolute inset-0 flex items-center justify-center mb-27">
         <p className="font-display text-[clamp(120px,15vw,180px)] font-bold text-transparent bg-gradient-to-b from-[#2A3441]/60 via-[#1E293B]/40 to-transparent bg-clip-text leading-none">
           {data.wpm}
         </p>

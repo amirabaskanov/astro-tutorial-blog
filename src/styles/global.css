@@ -249,3 +249,7 @@
     --color-black: #000;
     --color-white: #fff;
   }
+
+html {
+  scroll-behavior: smooth;
+}
