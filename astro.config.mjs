@@ -10,7 +10,16 @@ import netlify from "@astrojs/netlify";
 // https://astro.build/config
 export default defineConfig({
   site: "https://astro-tutorial-amir.netlify.app/",
-  integrations: [preact(), react()],
+  integrations: [
+    // Configure Preact for specific components
+    preact({
+      include: ['**/Preact/**/*.tsx', '**/Preact/**/*.jsx']
+    }),
+    // Configure React for specific components
+    react({
+      include: ['**/React/**/*.tsx', '**/React/**/*.jsx', '**/Bento/**/*.tsx']
+    })
+  ],
 
   vite: {
     plugins: [tailwindcss()],

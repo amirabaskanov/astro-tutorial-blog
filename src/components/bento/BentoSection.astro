@@ -2,6 +2,7 @@
 import BentoCard from './BentoCard.astro';
 import GithubActivity from './GithubActivity.astro';
 import BentoItemTypingSpeed from './BentoItemTypingSpeed.astro';
+import BentoItemMapLocation from './BentoItemMapLocation.astro';
 import { LocationIcon, FeaturedWorkIcon, SpotifyIcon, GithubIcon, TechStackIcon, ProjectsIcon } from '../icons/BentoIcons';
 import { Monkeytype } from '../icons/Monkeytype';
 import { LinkedIn } from '../icons/LinkedIn';
@@ -11,8 +12,8 @@ import { LinkedIn } from '../icons/LinkedIn';
   <div class="grid grid-cols-14 grid-rows-2 gap-4">
     <!-- Location Card (spans 2 rows) -->
     <div class="col-span-4 row-span-2">
-      <BentoCard title="Location" icon={LocationIcon} className="h-[300px]">
-        Location placeholder
+      <BentoCard className="h-[300px]">
+        <BentoItemMapLocation />
       </BentoCard>
     </div>
 
