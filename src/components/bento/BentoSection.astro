@@ -3,6 +3,7 @@ import BentoCard from './BentoCard.astro';
 import GithubActivity from './GithubActivity.astro';
 import BentoItemTypingSpeed from './BentoItemTypingSpeed.astro';
 import BentoItemMapLocation from './BentoItemMapLocation.astro';
+import BentoItemDiscoverMore from './BentoItemDiscoverMore';
 import { LocationIcon, FeaturedWorkIcon, SpotifyIcon, GithubIcon, TechStackIcon, ProjectsIcon } from '../icons/BentoIcons';
 import { Monkeytype } from '../icons/Monkeytype';
 import { LinkedIn } from '../icons/LinkedIn';
@@ -81,10 +82,7 @@ import { LinkedIn } from '../icons/LinkedIn';
     <!-- Discover More -->
     <div class="col-span-5 row-start-3">
       <BentoCard className="h-[90px]">
-        <div class="flex h-full items-center justify-between">
-          <span>Discover more projects</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
+        <BentoItemDiscoverMore client:load />
       </BentoCard>
     </div>
 
