@@ -3,7 +3,7 @@ import { defineConfig } from "astro/config";
 import { envField } from "astro/config";
 import preact from "@astrojs/preact";
 import react from "@astrojs/react";
-import tailwindcss from "@tailwindcss/vite";
+import tailwind from "@astrojs/tailwind";
 import netlify from "@astrojs/netlify";
 import path from "path";
 
@@ -18,11 +18,12 @@ export default defineConfig({
     // Configure React for specific components
     react({
       include: ['**/React/**/*.tsx', '**/React/**/*.jsx', '**/bento/**/*.tsx', '**/Bento/**/*.tsx']
-    })
+    }),
+    // Add Tailwind integration
+    tailwind()
   ],
 
   vite: {
-    plugins: [tailwindcss()],
     resolve: {
       alias: {
         '@': path.resolve('./src')

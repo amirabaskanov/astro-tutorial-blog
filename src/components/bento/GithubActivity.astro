@@ -151,7 +151,7 @@ Astro.props.totalContributions = totalContributions;
                 <div 
                   data-date={day.date}
                   data-count={day.contributionCount}
-                  class={`w-[18px] h-[18px] rounded-sm transition-colors ${getContributionColor(day.contributionCount)} hover:ring-1 hover:ring-white/20`}
+                  class={`contribution-square w-[18px] h-[18px] rounded-[5px] transition-colors ${getContributionColor(day.contributionCount)} hover:ring-1 hover:ring-white/20`}
                 />
               </div>
             ))}
@@ -274,7 +274,7 @@ Astro.props.totalContributions = totalContributions;
       slider.addEventListener('mousemove', (e: MouseEvent) => {
         if (!isDown) {
           const target = e.target as HTMLElement;
-          const square = target.classList.contains('rounded-sm') ? target : target.querySelector('.rounded-sm');
+          const square = target.classList.contains('contribution-square') ? target : target.querySelector('.contribution-square');
           
           if (square && square !== currentSquare) {
             currentSquare = square as HTMLElement;

@@ -11,37 +11,37 @@ import { LinkedIn } from '../icons/LinkedIn';
 ---
 
 <div id="bento" class="w-full max-w-[1120px] mx-auto px-4 pt-28">
-  <div class="grid grid-cols-14 grid-rows-2 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-14 grid-rows-2 gap-4">
     <!-- Location Card (spans 2 rows) -->
-    <div class="col-span-4 row-span-2">
+    <div class="md:col-span-4 row-span-2">
       <BentoCard className="h-[300px]">
         <BentoItemMapLocation />
       </BentoCard>
     </div>
 
     <!-- Featured Work Card (spans 2 rows) -->
-    <div class="col-span-5 row-span-2">
+    <div class="md:col-span-5 row-span-2">
       <BentoCard title="Featured work" icon={FeaturedWorkIcon} className="h-[300px]">
         Featured work placeholder
       </BentoCard>
     </div>
 
     <!-- Spotify Card -->
-    <div class="col-span-5">
+    <div class="md:col-span-5">
       <BentoCard title="Spotify" icon={SpotifyIcon} className="h-[140px]">
         Now playing placeholder
       </BentoCard>
     </div>
 
     <!-- Typing Speed Card (spans 2 rows) -->
-    <div class="col-span-5 row-span-2">
+    <div class="md:col-span-5 row-span-2">
       <BentoCard title="Typing speed" icon={Monkeytype} className="h-[250px]">
         <BentoItemTypingSpeed />
       </BentoCard>
     </div>
 
     <!-- Social Media Row -->
-    <div class="col-span-4 row-start-3 flex gap-4">
+    <div class="md:col-span-4 row-start-3 flex gap-4">
       <div class="w-1/3">
         <a href="https://github.com/amirabaskanov" target="_blank" rel="noopener noreferrer" class="block group/social">
           <div class="group relative rounded-[32px] border border-[#2A3441] bg-[#0f1219] overflow-hidden aspect-square">
@@ -81,25 +81,25 @@ import { LinkedIn } from '../icons/LinkedIn';
     </div>
 
     <!-- Discover More -->
-    <div class="col-span-5 row-start-3">
+    <div class="md:col-span-5 row-start-3">
       <BentoCard className="h-[90px]">
         <BentoItemDiscoverMore client:load />
       </BentoCard>
     </div>
 
     <!-- Bottom Row -->
-    <div class="col-span-7 row-start-4">
+    <div class="md:col-span-7 row-start-4">
       <BentoCard title="Github activity" icon={GithubIcon} className="h-[300px]">
         <div class="flex items-center justify-between">
           <GithubActivity username="amirabaskanov" />
-          <div class="text-white text-[14px] contribution-info absolute top-8.5 right-6">
+          <div class="text-white text-[14px] contribution-info absolute top-8 right-6">
             <span>Loading contributions...</span>
           </div>
         </div>
       </BentoCard>
     </div>
 
-    <div class="col-span-7 row-start-4">
+    <div class="md:col-span-7 row-start-4">
       <BentoCard title="Tech stack" icon={TechStackIcon} className="h-[300px]">
         <BentoItemTechStack />
       </BentoCard>
