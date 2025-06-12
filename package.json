@@ -13,9 +13,9 @@
     "@astrojs/preact": "^4.0.3",
     "@astrojs/react": "^4.2.5",
     "@astrojs/rss": "^4.0.11",
+    "@astrojs/tailwind": "^6.0.2",
     "@astrojs/ts-plugin": "^1.10.4",
     "@maptiler/leaflet-maptilersdk": "^4.0.2",
-    "@tailwindcss/vite": "^4.1.10",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "astro": "^5.1.10",
@@ -25,13 +25,12 @@
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
     "tailwind-merge": "^3.0.2",
-    "tailwindcss": "^4.1.10",
-    "tailwindcss-animated": "^2.0.0",
-    "tailwindcss-animation-delay": "^2.0.2"
+    "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.16",
     "@types/node": "^20.11.16",
+    "postcss": "^8.5.5",
     "prettier": "^3.5.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.11"
