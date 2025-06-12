@@ -4,6 +4,7 @@ import GithubActivity from './GithubActivity.astro';
 import BentoItemTypingSpeed from './BentoItemTypingSpeed.astro';
 import BentoItemMapLocation from './BentoItemMapLocation.astro';
 import BentoItemDiscoverMore from './BentoItemDiscoverMore';
+import BentoItemTechStack from './BentoItemTechStack.astro';
 import { LocationIcon, FeaturedWorkIcon, SpotifyIcon, GithubIcon, TechStackIcon, ProjectsIcon } from '../icons/BentoIcons';
 import { Monkeytype } from '../icons/Monkeytype';
 import { LinkedIn } from '../icons/LinkedIn';
@@ -100,7 +101,7 @@ import { LinkedIn } from '../icons/LinkedIn';
 
     <div class="col-span-7 row-start-4">
       <BentoCard title="Tech stack" icon={TechStackIcon} className="h-[300px]">
-        Technologies placeholder
+        <BentoItemTechStack />
       </BentoCard>
     </div>
   </div>
