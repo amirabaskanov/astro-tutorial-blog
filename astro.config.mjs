@@ -17,7 +17,7 @@ export default defineConfig({
     }),
     // Configure React for specific components
     react({
-      include: ['**/React/**/*.tsx', '**/React/**/*.jsx', '**/bento/**/*.tsx', '**/Bento/**/*.tsx']
+      include: ['**/React/**/*.tsx', '**/React/**/*.jsx', '**/bento/**/*.tsx']
     }),
     // Add Tailwind integration
     tailwind()
