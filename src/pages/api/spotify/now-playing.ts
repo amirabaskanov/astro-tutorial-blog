@@ -9,8 +9,11 @@ export const GET: APIRoute = async () => {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache',
-        'CDN-Cache-Control': 'public, max-age=1',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'Surrogate-Control': 'no-store',
+        'CDN-Cache-Control': 'no-store',
         'Netlify-Vary': 'query',
         'Access-Control-Allow-Origin': '*'
       }
@@ -21,7 +24,10 @@ export const GET: APIRoute = async () => {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'Surrogate-Control': 'no-store',
         'Access-Control-Allow-Origin': '*'
       }
     });

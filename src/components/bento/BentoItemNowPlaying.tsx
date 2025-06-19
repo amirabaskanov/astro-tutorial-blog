@@ -12,11 +12,17 @@ interface SpotifyData {
 export function BentoItemNowPlaying() {
   const [spotifyData, setSpotifyData] = useState<SpotifyData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchNowPlaying = async () => {
     try {
       const timestamp = Date.now();
-      const response = await fetch(`/api/spotify/now-playing?t=${timestamp}`);
+      const response = await fetch(`/api/spotify/now-playing?t=${timestamp}`, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache'
+        }
+      });
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -26,10 +32,19 @@ export function BentoItemNowPlaying() {
       console.log('New Spotify data:', data);
       
       if (data && data.title) {
-        setSpotifyData(data);
+        // Only update if the data is different
+        setSpotifyData(prev => {
+          if (!prev || prev.title !== data.title || prev.isPlaying !== data.isPlaying) {
+            return data;
+          }
+          return prev;
+        });
+      } else {
+        setError('No track data available');
       }
     } catch (error) {
       console.error('Error fetching Spotify data:', error);
+      setError('Failed to fetch track data');
     } finally {
       setIsLoading(false);
     }
@@ -41,10 +56,18 @@ export function BentoItemNowPlaying() {
     return () => clearInterval(interval);
   }, []);
 
-  if (isLoading || !spotifyData) {
+  if (isLoading) {
     return (
       <div className="flex h-full items-center justify-center">
         <p className="text-sm text-slate-400">Loading...</p>
+      </div>
+    );
+  }
+
+  if (error || !spotifyData) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <p className="text-sm text-slate-400">Unable to load track data</p>
       </div>
     );
   }

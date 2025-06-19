@@ -99,6 +99,8 @@ export const getNowPlayingResponse = async (): Promise<SpotifyData | null> => {
     const response = await fetch(NOW_PLAYING_ENDPOINT, {
       headers: {
         Authorization: `Bearer ${access_token}`,
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache'
       },
     });
 
@@ -130,6 +132,8 @@ export const getRecentlyPlayed = async (): Promise<SpotifyData | null> => {
     const response = await fetch(RECENTLY_PLAYED_ENDPOINT, {
       headers: {
         Authorization: `Bearer ${access_token}`,
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache'
       },
     });
 
