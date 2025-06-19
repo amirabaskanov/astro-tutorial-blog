@@ -1,33 +1,44 @@
-import useSWR from 'swr';
-import type { SpotifyData } from '../../lib/spotify';
+import { useEffect, useState } from 'react';
 import { SpotifyIcon } from '../icons/Spotify';
 
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error('Failed to fetch Spotify data');
-  }
-  return res.json();
-};
+interface SpotifyData {
+  isPlaying: boolean;
+  title: string;
+  artist: string;
+  albumImageUrl: string;
+  songUrl: string;
+}
 
-type Props = {
-  initialData?: SpotifyData | null;
-};
+export function BentoItemNowPlaying() {
+  const [spotifyData, setSpotifyData] = useState<SpotifyData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-export const BentoItemNowPlaying = ({ initialData }: Props) => {
-  const { data: spotifyData } = useSWR<SpotifyData | null>(
-    '/api/spotify/now-playing',
-    fetcher,
-    {
-      refreshInterval: 10000,
-      fallbackData: initialData,
+  const fetchNowPlaying = async () => {
+    try {
+      const response = await fetch('/api/spotify/now-playing');
+      if (!response.ok) {
+        throw new Error('Failed to fetch Spotify data');
+      }
+      const data = await response.json();
+      setSpotifyData(data);
+    } catch (error) {
+      console.error('Error fetching Spotify data:', error);
+    } finally {
+      setIsLoading(false);
     }
-  );
+  };
 
-  if (!spotifyData) {
+  useEffect(() => {
+    fetchNowPlaying();
+    // Fetch every 30 seconds
+    const interval = setInterval(fetchNowPlaying, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (isLoading || !spotifyData) {
     return (
       <div className="flex h-full items-center justify-center">
-        <SpotifyIcon className="h-8 w-8 text-white transition-colors hover:text-[#1DB954]" />
+        <p className="text-sm text-slate-400">Loading...</p>
       </div>
     );
   }
@@ -43,7 +54,6 @@ export const BentoItemNowPlaying = ({ initialData }: Props) => {
         src={spotifyData.albumImageUrl}
         alt={`${spotifyData.title} album art`}
         className={`h-[90px] w-[90px] rounded-lg object-cover ${
-          // spotifyData.isPlaying ? 'animate-[spin_5s_linear_infinite]' : ''
           spotifyData.isPlaying ? '' : ''
         }`}
       />
@@ -69,4 +79,4 @@ export const BentoItemNowPlaying = ({ initialData }: Props) => {
       </div>
     </a>
   );
-}; 
+} 
