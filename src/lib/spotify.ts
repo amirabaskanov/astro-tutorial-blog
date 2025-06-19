@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const NOW_PLAYING_ENDPOINT = 'https://api.spotify.com/v1/me/player/currently-playing';
-const RECENTLY_PLAYED_ENDPOINT = 'https://api.spotify.com/v1/me/player/recently-played?limit=1';
+const RECENTLY_PLAYED_ENDPOINT = 'https://api.spotify.com/v1/me/player/recently-played';
 const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
 
 const spotifyTrackSchema = z.object({
@@ -68,7 +68,6 @@ const getAccessToken = async () => {
     throw new Error('Missing required Spotify credentials in environment variables');
   }
 
-  console.log('Getting access token...');
   const basic = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
   const response = await fetch(TOKEN_ENDPOINT, {
     method: 'POST',
@@ -82,104 +81,50 @@ const getAccessToken = async () => {
     }),
   });
 
-  if (!response.ok) {
-    const error = await response.text();
-    console.error('Failed to get access token:', error);
-    throw new Error(`Failed to get access token: ${error}`);
-  }
-
   return response.json();
 };
 
-export const getNowPlayingResponse = async (): Promise<SpotifyData | null> => {
-  try {
-    const { access_token } = await getAccessToken();
-    console.log('Got access token, fetching now playing...');
-
-    const response = await fetch(NOW_PLAYING_ENDPOINT, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache'
-      },
-    });
-
-    if (response.status === 204) {
-      console.log('No track currently playing, fetching recently played...');
-      return getRecentlyPlayed();
-    }
-
-    const json = await response.json();
-    const result = spotifyTrackSchema.safeParse(json);
-
-    if (!result.success || !result.data.item) {
-      console.log('Invalid track data or no item, fetching recently played...');
-      return getRecentlyPlayed();
-    }
-
-    return mapSpotifyData(result.data);
-  } catch (error) {
-    console.error('Error in getNowPlayingResponse:', error);
-    throw error;
-  }
-};
-
-export const getRecentlyPlayed = async (): Promise<SpotifyData | null> => {
-  try {
-    const { access_token } = await getAccessToken();
-    console.log('Fetching recently played tracks...');
-
-    const response = await fetch(RECENTLY_PLAYED_ENDPOINT, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache'
-      },
-    });
-
-    console.log('Recently played status:', response.status);
-    if (response.status === 204 || response.status > 400) {
-      console.error('Error response from recently played:', response.status);
-      return null;
-    }
-
-    const json = await response.json();
-    console.log('Recently played raw response:', json);
-    
-    const result = spotifyRecentlyPlayedSchema.safeParse(json);
-    if (!result.success) {
-      console.error('Failed to parse recently played:', result.error);
-      return null;
-    }
-
-    if (!result.data.items.length) {
-      console.log('No recently played tracks found');
-      return null;
-    }
-
-    return {
-      isPlaying: false,
-      title: result.data.items[0].track.name,
-      artist: result.data.items[0].track.artists.map(artist => artist.name).join(', '),
-      albumImageUrl: result.data.items[0].track.album.images[0]?.url,
-      songUrl: result.data.items[0].track.external_urls.spotify,
-    };
-  } catch (error) {
-    console.error('Error in getRecentlyPlayed:', error);
-    return null;
-  }
-};
-
-const mapSpotifyData = (data: z.infer<typeof spotifyTrackSchema>): SpotifyData => {
-  if (!data.item) {
-    throw new Error('No track data available');
-  }
-
+const mapSpotifyData = (track: any) => {
   return {
-    isPlaying: data.is_playing,
-    title: data.item.name,
-    artist: data.item.artists.map(artist => artist.name).join(', '),
-    albumImageUrl: data.item.album.images[0]?.url,
-    songUrl: data.item.external_urls.spotify,
+    title: track.name,
+    artist: track.artists.map((artist: any) => artist.name).join(', '),
+    albumImageUrl: track.album.images[0]?.url,
+    songUrl: track.external_urls.spotify,
+  };
+};
+
+const getRecentlyPlayed = async (access_token: string): Promise<SpotifyData> => {
+  const response = await fetch(`${RECENTLY_PLAYED_ENDPOINT}?limit=1`, {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+
+  const { items: [{ track }] } = await response.json();
+  
+  return {
+    isPlaying: false,
+    ...mapSpotifyData(track)
+  };
+};
+
+export const getNowPlayingResponse = async (): Promise<SpotifyData> => {
+  const { access_token } = await getAccessToken();
+
+  const response = await fetch(NOW_PLAYING_ENDPOINT, {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+
+  if (response.status === 204) {
+    return getRecentlyPlayed(access_token);
+  }
+
+  const { item: track } = await response.json();
+  
+  return {
+    isPlaying: true,
+    ...mapSpotifyData(track)
   };
 }; 

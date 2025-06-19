@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { SpotifyIcon } from '../icons/Spotify';
 
 interface SpotifyData {
@@ -13,11 +13,18 @@ export function BentoItemNowPlaying() {
   const [spotifyData, setSpotifyData] = useState<SpotifyData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [lastFetchTime, setLastFetchTime] = useState<number>(0);
 
-  const fetchNowPlaying = async () => {
+  const fetchNowPlaying = useCallback(async (force = false) => {
+    const now = Date.now();
+    // Only throttle if not forced
+    if (!force && now - lastFetchTime < 5000) {
+      return;
+    }
+
     try {
-      const timestamp = Date.now();
-      const response = await fetch(`/api/spotify/now-playing?t=${timestamp}`, {
+      setLastFetchTime(now);
+      const response = await fetch(`/api/spotify/now-playing?t=${now}`, {
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
           'Pragma': 'no-cache'
@@ -32,13 +39,8 @@ export function BentoItemNowPlaying() {
       console.log('New Spotify data:', data);
       
       if (data && data.title) {
-        // Only update if the data is different
-        setSpotifyData(prev => {
-          if (!prev || prev.title !== data.title || prev.isPlaying !== data.isPlaying) {
-            return data;
-          }
-          return prev;
-        });
+        setSpotifyData(data); // Always update the data
+        setError(null);
       } else {
         setError('No track data available');
       }
@@ -48,13 +50,38 @@ export function BentoItemNowPlaying() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [lastFetchTime]);
 
   useEffect(() => {
-    fetchNowPlaying();
-    const interval = setInterval(fetchNowPlaying, 20000);
-    return () => clearInterval(interval);
-  }, []);
+    // Initial fetch
+    fetchNowPlaying(true);
+
+    // Set up polling - more frequent updates
+    const interval = setInterval(() => {
+      fetchNowPlaying(true);
+    }, 10000); // Poll every 10 seconds instead of 20
+
+    // Set up visibility change handler
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchNowPlaying(true);
+      }
+    };
+
+    // Set up focus handler
+    const handleFocus = () => {
+      fetchNowPlaying(true);
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [fetchNowPlaying]);
 
   if (isLoading) {
     return (
