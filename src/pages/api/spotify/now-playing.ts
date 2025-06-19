@@ -8,31 +8,39 @@ export const GET: APIRoute = async ({ request }) => {
     const response = await getNowPlayingResponse();
     console.log(`[${requestTime}] API: Got response:`, JSON.stringify(response, null, 2));
     
-    return new Response(JSON.stringify(response), {
+    // Create a unique ETag for this response
+    const etag = `${Date.now()}-${Math.random()}`;
+    
+    return new Response(JSON.stringify({ ...response, _timestamp: requestTime }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        // Prevent caching at all levels
-        'Cache-Control': 'private, no-cache, no-store, must-revalidate, max-age=0',
+        'Cache-Control': 'no-store, private, no-cache, must-revalidate, proxy-revalidate',
+        'Surrogate-Control': 'no-store',
         'Pragma': 'no-cache',
         'Expires': '0',
-        // Netlify specific cache headers
-        'Netlify-CDN-Cache-Control': 'no-store',
+        'ETag': etag,
+        'Vary': '*',
         'X-Request-Time': requestTime
       },
     });
   } catch (error) {
     console.error(`[${requestTime}] API: Error:`, error);
-    return new Response(JSON.stringify({ error: 'Failed to fetch Spotify data', timestamp: requestTime }), {
+    return new Response(JSON.stringify({ 
+      error: 'Failed to fetch Spotify data', 
+      timestamp: requestTime,
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }), {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'private, no-cache, no-store, must-revalidate, max-age=0',
+        'Cache-Control': 'no-store, private, no-cache, must-revalidate, proxy-revalidate',
+        'Surrogate-Control': 'no-store',
         'Pragma': 'no-cache',
         'Expires': '0',
-        'Netlify-CDN-Cache-Control': 'no-store',
+        'Vary': '*',
         'X-Request-Time': requestTime
       },
     });

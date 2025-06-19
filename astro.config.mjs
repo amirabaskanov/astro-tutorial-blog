@@ -4,7 +4,7 @@ import { envField } from "astro/config";
 import preact from "@astrojs/preact";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
-import netlify from "@astrojs/netlify";
+import netlify from "@astrojs/netlify/functions";
 import path from "path";
 
 // https://astro.build/config
@@ -44,5 +44,8 @@ export default defineConfig({
     },
   },
 
-  adapter: netlify(),
+  output: 'server',
+  adapter: netlify({
+    edgeMiddleware: true
+  }),
 });

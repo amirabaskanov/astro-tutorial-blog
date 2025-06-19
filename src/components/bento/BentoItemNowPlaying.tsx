@@ -7,6 +7,7 @@ interface SpotifyData {
   artist: string;
   albumImageUrl: string;
   songUrl: string;
+  _timestamp: number;
 }
 
 export function BentoItemNowPlaying() {
@@ -18,13 +19,16 @@ export function BentoItemNowPlaying() {
       console.log('Fetching Spotify data...');
       const timestamp = Date.now();
       const response = await fetch(`/api/spotify/now-playing?t=${timestamp}`, {
+        method: 'GET',
         headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache'
-        }
+          'Cache-Control': 'no-cache, no-store, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'If-None-Match': '*'
+        },
+        cache: 'no-store'
       });
-      console.log('Response status:', response.status);
       
+      console.log('Response status:', response.status);
       const headers = response.headers;
       const requestTime = headers.get('X-Request-Time');
       console.log('Request time from server:', requestTime);
@@ -36,13 +40,13 @@ export function BentoItemNowPlaying() {
       }
       
       const data = await response.json();
-      console.log('Spotify data:', data);
+      console.log('Spotify data with timestamp:', data);
       
-      // Only update if we got valid data
-      if (data && (data.title || data.error)) {
+      // Only update if we got valid data and it's a new response
+      if (data && data._timestamp && (!spotifyData || data._timestamp !== spotifyData._timestamp)) {
         setSpotifyData(data);
       } else {
-        console.error('Invalid data format received:', data);
+        console.log('Received duplicate or invalid data:', data);
       }
     } catch (error) {
       console.error('Error fetching Spotify data:', error);
