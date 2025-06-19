@@ -7,49 +7,50 @@ interface SpotifyData {
   artist: string;
   albumImageUrl: string;
   songUrl: string;
-  _timestamp: number;
 }
 
 export function BentoItemNowPlaying() {
   const [spotifyData, setSpotifyData] = useState<SpotifyData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [retryCount, setRetryCount] = useState(0);
 
   const fetchNowPlaying = async () => {
     try {
-      console.log('Fetching Spotify data...');
       const timestamp = Date.now();
       const response = await fetch(`/api/spotify/now-playing?t=${timestamp}`, {
         method: 'GET',
         headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate, proxy-revalidate',
-          'Pragma': 'no-cache',
-          'If-None-Match': '*'
-        },
-        cache: 'no-store'
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
       });
-      
-      console.log('Response status:', response.status);
-      const headers = response.headers;
-      const requestTime = headers.get('X-Request-Time');
-      console.log('Request time from server:', requestTime);
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error response:', errorText);
-        throw new Error('Failed to fetch Spotify data');
+
+      // Handle 304 responses as valid
+      if (response.status === 304) {
+        console.log('304 Not Modified - Using cached data');
+        return;
       }
-      
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
-      console.log('Spotify data with timestamp:', data);
+      console.log('New Spotify data:', data);
       
-      // Only update if we got valid data and it's a new response
-      if (data && data._timestamp && (!spotifyData || data._timestamp !== spotifyData._timestamp)) {
+      if (data && data.title) {
         setSpotifyData(data);
-      } else {
-        console.log('Received duplicate or invalid data:', data);
+        setRetryCount(0); // Reset retry count on successful fetch
       }
     } catch (error) {
       console.error('Error fetching Spotify data:', error);
+      // Implement exponential backoff
+      const nextRetry = Math.min(20, Math.pow(2, retryCount));
+      console.log(`Will retry in ${nextRetry} seconds`);
+      setTimeout(() => {
+        setRetryCount(prev => prev + 1);
+        fetchNowPlaying();
+      }, nextRetry * 1000);
     } finally {
       setIsLoading(false);
     }
@@ -57,7 +58,6 @@ export function BentoItemNowPlaying() {
 
   useEffect(() => {
     fetchNowPlaying();
-    // Fetch every 20 seconds
     const interval = setInterval(fetchNowPlaying, 20000);
     return () => clearInterval(interval);
   }, []);
