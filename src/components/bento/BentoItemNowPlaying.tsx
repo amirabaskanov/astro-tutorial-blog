@@ -17,16 +17,33 @@ export function BentoItemNowPlaying() {
     try {
       console.log('Fetching Spotify data...');
       const timestamp = Date.now();
-      const response = await fetch(`/api/spotify/now-playing?t=${timestamp}`);
+      const response = await fetch(`/api/spotify/now-playing?t=${timestamp}`, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache'
+        }
+      });
       console.log('Response status:', response.status);
+      
+      const headers = response.headers;
+      const requestTime = headers.get('X-Request-Time');
+      console.log('Request time from server:', requestTime);
+      
       if (!response.ok) {
         const errorText = await response.text();
         console.error('Error response:', errorText);
         throw new Error('Failed to fetch Spotify data');
       }
+      
       const data = await response.json();
       console.log('Spotify data:', data);
-      setSpotifyData(data);
+      
+      // Only update if we got valid data
+      if (data && (data.title || data.error)) {
+        setSpotifyData(data);
+      } else {
+        console.error('Invalid data format received:', data);
+      }
     } catch (error) {
       console.error('Error fetching Spotify data:', error);
     } finally {
