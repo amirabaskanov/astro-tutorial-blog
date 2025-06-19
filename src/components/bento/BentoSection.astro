@@ -8,6 +8,7 @@ import BentoItemTechStack from './BentoItemTechStack.astro';
 import { LocationIcon, FeaturedWorkIcon, SpotifyIcon, GithubIcon, TechStackIcon, ProjectsIcon } from '../icons/BentoIcons';
 import { Monkeytype } from '../icons/Monkeytype';
 import { LinkedIn } from '../icons/LinkedIn';
+import BentoItemNowPlaying from './BentoItemNowPlaying.astro';
 ---
 
 <div id="bento" class="w-full max-w-[1120px] mx-auto px-4 pt-28">
@@ -29,7 +30,7 @@ import { LinkedIn } from '../icons/LinkedIn';
     <!-- Spotify Card -->
     <div class="md:col-span-5">
       <BentoCard title="Spotify" icon={SpotifyIcon} className="h-[140px]">
-        Now playing placeholder
+        <BentoItemNowPlaying />
       </BentoCard>
     </div>
 

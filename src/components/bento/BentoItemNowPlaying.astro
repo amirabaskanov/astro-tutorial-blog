@@ -1,0 +1,10 @@
+---
+import { BentoItemNowPlaying as BentoItemNowPlayingComponent } from './BentoItemNowPlaying.tsx';
+import { getNowPlayingResponse } from '../../lib/spotify';
+
+const initialData = await getNowPlayingResponse();
+---
+
+<div class="col-span-1 row-span-1 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
+  <BentoItemNowPlayingComponent client:load initialData={initialData} />
+</div> 
