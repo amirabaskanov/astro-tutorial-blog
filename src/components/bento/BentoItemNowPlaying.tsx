@@ -30,8 +30,8 @@ export function BentoItemNowPlaying() {
 
   useEffect(() => {
     fetchNowPlaying();
-    // Fetch every 30 seconds
-    const interval = setInterval(fetchNowPlaying, 30000);
+    // Fetch every 20 seconds
+    const interval = setInterval(fetchNowPlaying, 20000);
     return () => clearInterval(interval);
   }, []);
 
