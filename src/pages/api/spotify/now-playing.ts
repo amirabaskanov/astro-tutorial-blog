@@ -1,9 +1,10 @@
 import type { APIRoute } from 'astro';
 import { getNowPlayingResponse } from '../../../lib/spotify';
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ request }) => {
   try {
-    console.log('API: Fetching Spotify data...');
+    console.log('API: Fetching Spotify data...', new Date().toISOString());
+    console.log('API: Request URL:', request.url);
     console.log('API: Environment variables check:', {
       hasClientId: !!import.meta.env.SPOTIFY_CLIENT_ID,
       hasClientSecret: !!import.meta.env.SPOTIFY_CLIENT_SECRET,
@@ -11,15 +12,20 @@ export const GET: APIRoute = async () => {
     });
     
     const response = await getNowPlayingResponse();
-    console.log('API: Spotify response received');
+    console.log('API: Spotify response received:', response);
     
     return new Response(JSON.stringify(response), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        // Add CORS headers to ensure the API is accessible
         'Access-Control-Allow-Origin': '*',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Surrogate-Control': 'no-store',
+        'Edge-Control': 'no-store',
+        'CDN-Cache-Control': 'no-store',
+        'Netlify-CDN-Cache-Control': 'no-store',
+        'Pragma': 'no-cache',
+        'Expires': '0',
       },
     });
   } catch (error) {
@@ -34,6 +40,12 @@ export const GET: APIRoute = async () => {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Surrogate-Control': 'no-store',
+        'Edge-Control': 'no-store',
+        'CDN-Cache-Control': 'no-store',
+        'Netlify-CDN-Cache-Control': 'no-store',
+        'Pragma': 'no-cache',
+        'Expires': '0',
       },
     });
   }
