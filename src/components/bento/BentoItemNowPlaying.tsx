@@ -15,11 +15,16 @@ export function BentoItemNowPlaying() {
 
   const fetchNowPlaying = async () => {
     try {
+      console.log('Fetching Spotify data...');
       const response = await fetch('/api/spotify/now-playing');
+      console.log('Response status:', response.status);
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
         throw new Error('Failed to fetch Spotify data');
       }
       const data = await response.json();
+      console.log('Spotify data:', data);
       setSpotifyData(data);
     } catch (error) {
       console.error('Error fetching Spotify data:', error);
