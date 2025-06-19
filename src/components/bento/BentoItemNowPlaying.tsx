@@ -27,7 +27,7 @@ export const BentoItemNowPlaying = ({ initialData }: Props) => {
   if (!spotifyData) {
     return (
       <div className="flex h-full items-center justify-center">
-        <SpotifyIcon className="h-8 w-8 text-zinc-400 transition-colors hover:text-[#1DB954]" />
+        <SpotifyIcon className="h-8 w-8 text-white transition-colors hover:text-[#1DB954]" />
       </div>
     );
   }
@@ -37,29 +37,35 @@ export const BentoItemNowPlaying = ({ initialData }: Props) => {
       href={spotifyData.songUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-full items-center gap-4 p-4"
+      className="group relative flex h-full items-center px-0"
     >
-      <div className="relative shrink-0">
-        <img
-          src={spotifyData.albumImageUrl}
-          alt={`${spotifyData.title} album art`}
-          className={`h-16 w-16 rounded-lg object-cover shadow-md ${
-            spotifyData.isPlaying ? 'animate-[spin_5s_linear_infinite]' : ''
-          }`}
-        />
-        <SpotifyIcon className="absolute bottom-0 right-0 h-5 w-5 translate-x-1 translate-y-1 text-[#1DB954] drop-shadow-md" />
-      </div>
+      <img
+        src={spotifyData.albumImageUrl}
+        alt={`${spotifyData.title} album art`}
+        className={`h-[90px] w-[90px] rounded-lg object-cover ${
+          // spotifyData.isPlaying ? 'animate-[spin_5s_linear_infinite]' : ''
+          spotifyData.isPlaying ? '' : ''
+        }`}
+      />
 
-      <div className="flex flex-col justify-center overflow-hidden">
-        <p className="truncate text-sm font-medium text-zinc-100 group-hover:text-white">
-          {spotifyData.title}
-        </p>
-        <p className="truncate text-xs text-zinc-400 group-hover:text-zinc-300">
-          {spotifyData.artist}
-        </p>
-        <p className="mt-1 text-xs text-zinc-500">
+      <div className="ml-4 flex flex-col justify-center space-y-1.5 overflow-hidden">
+        <p className={`text-xs ${
+          spotifyData.isPlaying ? 'animate-[pulse_2s_ease-in-out_infinite] text-white' : 'text-slate-400'
+        }`}>
           {spotifyData.isPlaying ? 'Now Playing' : 'Last Played'}
         </p>
+        <p className="truncate text-sm font-medium text-white">
+          {spotifyData.title}
+        </p>
+        <p className="truncate text-xs text-slate-400">
+          {spotifyData.artist}
+        </p>
+      </div>
+
+      <div className="absolute -right-2 -top-2">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 z-10 border border-white/10">
+          <SpotifyIcon className="h-4 w-4 text-white group-hover:text-[#1DB954]" />
+        </div>
       </div>
     </a>
   );
