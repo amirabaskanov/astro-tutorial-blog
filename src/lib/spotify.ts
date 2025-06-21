@@ -94,7 +94,9 @@ const mapSpotifyData = (track: any) => {
 };
 
 const getRecentlyPlayed = async (access_token: string): Promise<SpotifyData> => {
-  const response = await fetch(`${RECENTLY_PLAYED_ENDPOINT}?limit=1`, {
+  // Get current timestamp in milliseconds
+  const now = Date.now();
+  const response = await fetch(`${RECENTLY_PLAYED_ENDPOINT}?limit=1&before=${now}`, {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
