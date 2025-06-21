@@ -5,7 +5,7 @@ import "../styles/global.css";
 
 <section class="w-2/3 max-w-[1120px] mx-auto flex flex-col gap-8 px-4 h-screen justify-center">
   <div
-    class="flex w-fit items-center rounded-full gap-3 py-1.5 pl-3 pr-4 border border-zinc-600/75 bg-slate-950/25 animate-fade-up animate-blur-out"
+    class="invisible flex w-fit items-center rounded-full gap-3 py-1.5 pl-3 pr-4 border border-zinc-600/75 bg-slate-950/25 will-change-transform will-change-opacity animate-fade-up"
   >
     <div class="relative size-3">
       <div class="absolute size-full animate-ping rounded-full bg-green-300 opacity-65">
@@ -18,16 +18,23 @@ import "../styles/global.css";
   </div>
 
   <h1
-    class="text-slate-100 animate-fade-up-200 animate-blur-out text-[clamp(2rem,7vw,3rem)] font-medium leading-[1.05] tracking-tight"
+    class="invisible text-slate-100 will-change-transform will-change-opacity animate-fade-up-200 text-[clamp(2rem,7vw,3rem)] font-medium leading-[1.05] tracking-tight"
   >
     Hi, I'm Amir. <br /> A software engineer.
   </h1>
 
   <h2
-    class="animate-fade-up-400 animate-blur-out mb-8 max-w-xl leading-relaxed text-slate-400 max-sm:text-sm"
+    class="invisible will-change-transform will-change-opacity animate-fade-up-400 mb-8 max-w-xl leading-relaxed text-slate-400 max-sm:text-sm"
   >
     I am a full-stack software engineer with multiple internships in AI-driven startups. I have a passion for learning and creating new things.
   </h2>
 
-  <Keyboard class="animate-fade-up-600 animate-blur-out" />
+  <Keyboard class="invisible will-change-transform will-change-opacity animate-fade-up-600" />
 </section>
+
+<style>
+  :global(*) {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+</style>
