@@ -17,8 +17,8 @@ export function BentoItemNowPlaying() {
 
   const fetchNowPlaying = useCallback(async (force = false) => {
     const now = Date.now();
-    // Only throttle if not forced
-    if (!force && now - lastFetchTime < 5000) {
+    // Increase throttle time to 30 seconds
+    if (!force && now - lastFetchTime < 30000) {
       return;
     }
 
@@ -32,21 +32,23 @@ export function BentoItemNowPlaying() {
       });
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.details || `HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log('New Spotify data:', data);
       
       if (data && data.title) {
-        setSpotifyData(data); // Always update the data
+        setSpotifyData(data);
         setError(null);
+      } else if (data.error) {
+        setError(data.details || data.error);
       } else {
         setError('No track data available');
       }
     } catch (error) {
       console.error('Error fetching Spotify data:', error);
-      setError('Failed to fetch track data');
+      setError(error instanceof Error ? error.message : 'Failed to fetch track data');
     } finally {
       setIsLoading(false);
     }
@@ -56,21 +58,21 @@ export function BentoItemNowPlaying() {
     // Initial fetch
     fetchNowPlaying(true);
 
-    // Set up polling - more frequent updates
+    // Set up polling - less frequent updates (every 30 seconds)
     const interval = setInterval(() => {
-      fetchNowPlaying(true);
-    }, 10000); // Poll every 10 seconds instead of 20
+      fetchNowPlaying(false); // Don't force refresh on interval
+    }, 30000);
 
-    // Set up visibility change handler
+    // Set up visibility change handler - with throttling
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
-        fetchNowPlaying(true);
+        fetchNowPlaying(false); // Don't force refresh on visibility change
       }
     };
 
-    // Set up focus handler
+    // Set up focus handler - with throttling
     const handleFocus = () => {
-      fetchNowPlaying(true);
+      fetchNowPlaying(false); // Don't force refresh on focus
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);

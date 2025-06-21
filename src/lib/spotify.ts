@@ -100,12 +100,32 @@ const getRecentlyPlayed = async (access_token: string): Promise<SpotifyData> => 
     },
   });
 
-  const { items: [{ track }] } = await response.json();
+  if (!response.ok) {
+    throw new Error(`Failed to fetch recently played tracks: ${response.status}`);
+  }
+
+  const data = await response.json();
   
-  return {
-    isPlaying: false,
-    ...mapSpotifyData(track)
-  };
+  // Validate the response has items
+  if (!data.items?.length) {
+    throw new Error('No recently played tracks found');
+  }
+
+  const { track } = data.items[0];
+  
+  if (!track) {
+    throw new Error('Invalid track data in recently played response');
+  }
+
+  try {
+    return {
+      isPlaying: false,
+      ...mapSpotifyData(track)
+    };
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to map recently played track data: ${errorMessage}`);
+  }
 };
 
 export const getNowPlayingResponse = async (): Promise<SpotifyData> => {
@@ -121,10 +141,23 @@ export const getNowPlayingResponse = async (): Promise<SpotifyData> => {
     return getRecentlyPlayed(access_token);
   }
 
-  const { item: track } = await response.json();
+  if (!response.ok) {
+    throw new Error(`Failed to fetch now playing: ${response.status}`);
+  }
+
+  const data = await response.json();
   
-  return {
-    isPlaying: true,
-    ...mapSpotifyData(track)
-  };
+  if (!data.item) {
+    return getRecentlyPlayed(access_token);
+  }
+
+  try {
+    return {
+      isPlaying: true,
+      ...mapSpotifyData(data.item)
+    };
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to map now playing track data: ${errorMessage}`);
+  }
 }; 
