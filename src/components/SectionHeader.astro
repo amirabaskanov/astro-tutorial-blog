@@ -1,0 +1,28 @@
+---
+interface Props {
+  section: string;
+  title?: string;
+  description?: string;
+  forHomePage?: boolean;
+  class?: string;
+  icon?: any;
+}
+
+const { section, title, description, forHomePage = false, icon: Icon } = Astro.props;
+---
+
+<div class:list={['space-y-4', Astro.props.class]}>
+  <div class="flex items-center gap-2">
+    {Icon && <Icon className="size-5 text-emerald-400" />}
+    <p class="text-sm text-emerald-400">{section}</p>
+  </div>
+  <div class="space-y-2">
+    <h2 class:list={[
+      'font-display font-semibold tracking-tight',
+      forHomePage ? 'text-4xl' : 'text-2xl'
+    ]}>
+      {title}
+    </h2>
+    {description && <p class="text-zinc-400">{description}</p>}
+  </div>
+</div> 

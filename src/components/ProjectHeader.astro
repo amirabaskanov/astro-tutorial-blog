@@ -1,0 +1,21 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { Suitcase } from './icons/Suitcase';
+
+interface Props {
+  forHomePage?: boolean;
+  class?: string;
+}
+
+const projectMetaData = {
+  title: "Milestones in the learning journey",
+  description: "Each project marks a step forward, showcasing my growth and journey as a developer. Explore how I've tackled challenges and built solutions along the way."
+};
+---
+
+<SectionHeader
+  section="Projects"
+  icon={Suitcase}
+  {...projectMetaData}
+  {...Astro.props}
+/> 

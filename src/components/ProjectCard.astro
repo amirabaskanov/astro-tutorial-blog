@@ -1,0 +1,42 @@
+---
+import { ArrowRight } from './icons/ArrowRight';
+
+interface Props {
+  title: string;
+  year: number;
+  description: string;
+  heroImage: string;
+  heroImageAlign?: 'center' | 'top' | 'bottom';
+  slug: string;
+}
+
+const { year, title, description, slug, heroImage, heroImageAlign = 'center' } = Astro.props;
+---
+
+<a href={`/projects/${slug}`} class="group space-y-6">
+  <div class="rounded-lg overflow-clip">
+    <img
+      src={heroImage}
+      alt={title}
+      class:list={[
+        'aspect-[1.75] transition-all duration-800 group-hover:scale-105',
+        { 'object-top': heroImageAlign === 'top' },
+        { 'object-center': heroImageAlign === 'center' },
+        { 'object-bottom': heroImageAlign === 'bottom' }
+      ]}
+    />
+  </div>
+  <div class="flex flex-col gap-4">
+    <p>{year}</p>
+    <h4 class="font-display text-xl font-semibold !leading-[1.25] max-sm:text-lg">
+      {title}
+    </h4>
+    <p class="text-sm text-zinc-400">
+      {description}
+    </p>
+    <span class="link-hover-animation group-hover:link-hovered-animation w-fit text-sm text-emerald-400">
+      Read more
+      <ArrowRight className="ml-1 inline-block transition-all duration-300 group-hover:ml-2" />
+    </span>
+  </div>
+</a> 

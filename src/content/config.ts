@@ -1,8 +1,5 @@
-// Import the glob loader
-import { glob } from "astro/loaders";
-// Import utilities from `astro:content`
-import { z, defineCollection } from "astro:content";
-// Define a `loader` and `schema` for each collection
+import { defineCollection, z } from 'astro:content';
+
 const blog = defineCollection({
   type: 'content',
   schema: z.object({
@@ -29,8 +26,7 @@ const projects = defineCollection({
   })
 });
 
-// Export a single `collections` object to register your collection(s)
 export const collections = {
   blog,
   projects
-};
+}; 

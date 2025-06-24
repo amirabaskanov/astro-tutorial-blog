@@ -1,14 +1,30 @@
 ---
-import "../styles/global.css";
+import { getCollection } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+import ProjectHeader from './ProjectHeader.astro';
+
+const allProjects = await getCollection('projects');
 ---
 
-<section id='projects' class='mt-40 scroll-mt-16'>
-  <div class='items-center justify-between gap-4 lg:flex'>
-    
-  </div>
-  <div
-    class='mt-12 grid gap-12 sm:grid-cols-2 lg:grid-cols-3'
-  >
-    <p></p>
+<section id='projects' class='my-60 scroll-mt-16'>
+  <div class='w-full max-w-[1120px] mx-auto px-4'>
+    <div class='items-center justify-between gap-4 lg:flex'>
+      <ProjectHeader forHomePage />
+      <a href='/projects' class='max-lg:hidden text-sm text-emerald-400 hover:text-emerald-300 transition-colors'>
+        View all projects →
+      </a>
+    </div>
+    <div class='mt-12 grid gap-12 sm:grid-cols-2 lg:grid-cols-3'>
+      {allProjects.map((project) => (
+        <ProjectCard
+          slug={project.slug}
+          title={project.data.title}
+          year={project.data.year}
+          description={project.data.description}
+          heroImage={project.data.heroImage}
+          heroImageAlign={project.data.heroImageAlign}
+        />
+      ))}
+    </div>
   </div>
 </section>

@@ -1,6 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
+  "include": [".astro/types.d.ts", "src/**/*"],
   "exclude": ["dist"],
   "compilerOptions": {
     "baseUrl": ".",
@@ -13,7 +13,7 @@
     "plugins": [
       {
         "name": "@astrojs/ts-plugin"
-      },
+      }
     ]
   }
 }
